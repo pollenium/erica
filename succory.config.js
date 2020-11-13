@@ -10,15 +10,18 @@ const sources = {
   'openzeppelin/GSN/Context.sol': `${zeppelinContractsDir}/GSN/Context.sol`,
   'openzeppelin/token/ERC20/IERC20.sol': `${zeppelinContractsDir}/token/ERC20/IERC20.sol`,
   'openzeppelin/token/ERC20/ERC20.sol': `${zeppelinContractsDir}/token/ERC20/ERC20.sol`,
-  'Token.sol': `${contractsDir}/Token.sol`
+  'openzeppelin/ownership/Ownable.sol': `${zeppelinContractsDir}/ownership/Ownable.sol`,
+  'Membership.sol': `${contractsDir}/Membership.sol`,
+  'Pausable.sol': `${contractsDir}/Pausable.sol`,
+  'Erica.sol': `${contractsDir}/Erica.sol`
 }
 
 module.exports = {
   sources,
   outs: [{
-    constName: 'token',
-    fileName: 'Token.sol',
-    contractName: 'Token'
+    constName: 'erica',
+    fileName: 'Erica.sol',
+    contractName: 'Erica'
   }],
   tsPath: './ts/contractOutputs.ts'
 }

@@ -60,37 +60,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.EricaReader = void 0;
 var ethers_1 = require("ethers");
 var pollenium_buttercup_1 = require("pollenium-buttercup");
 var pollenium_uvaursi_1 = require("pollenium-uvaursi");
 var pollenium_clover_1 = require("pollenium-clover");
 var __1 = require("../../");
-var TokenReader = /** @class */ (function (_super) {
-    __extends(TokenReader, _super);
-    function TokenReader(struct) {
-        return _super.call(this, __assign(__assign({}, __1.token), struct)) || this;
+var EricaReader = /** @class */ (function (_super) {
+    __extends(EricaReader, _super);
+    function EricaReader(struct) {
+        return _super.call(this, __assign(__assign({}, __1.erica), struct)) || this;
     }
-    TokenReader.prototype.fetchName = function () {
+    EricaReader.prototype.fetchOwner = function () {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.ethersContract.name()];
-                    case 1: return [2 /*return*/, _a.sent()];
+            var _a, _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _a = pollenium_buttercup_1.Address.bind;
+                        _c = (_b = pollenium_uvaursi_1.Uu).fromHexish;
+                        return [4 /*yield*/, this.ethersContract.owner()];
+                    case 1: return [2 /*return*/, new (_a.apply(pollenium_buttercup_1.Address, [void 0, _c.apply(_b, [_d.sent()])]))()];
                 }
             });
         });
     };
-    TokenReader.prototype.fetchSymbol = function () {
+    EricaReader.prototype.fetchName = function () {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.ethersContract.symbol()];
-                    case 1: return [2 /*return*/, _a.sent()];
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = (_a = pollenium_uvaursi_1.Uu).fromUtf8;
+                        return [4 /*yield*/, this.ethersContract.name()];
+                    case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
                 }
             });
         });
     };
-    TokenReader.prototype.fetchDecimals = function () {
+    EricaReader.prototype.fetchSymbol = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = (_a = pollenium_uvaursi_1.Uu).fromUtf8;
+                        return [4 /*yield*/, this.ethersContract.symbol()];
+                    case 1: return [2 /*return*/, _b.apply(_a, [_c.sent()])];
+                }
+            });
+        });
+    };
+    EricaReader.prototype.fetchDecimals = function () {
         return __awaiter(this, void 0, void 0, function () {
             var decimalsBignumber, _a, _b, _c;
             return __generator(this, function (_d) {
@@ -106,7 +127,7 @@ var TokenReader = /** @class */ (function (_super) {
             });
         });
     };
-    TokenReader.prototype.fetchTotalSupply = function () {
+    EricaReader.prototype.fetchTotalSupply = function () {
         return __awaiter(this, void 0, void 0, function () {
             var totalSupplyBignumber, _a, _b, _c;
             return __generator(this, function (_d) {
@@ -122,7 +143,7 @@ var TokenReader = /** @class */ (function (_super) {
             });
         });
     };
-    TokenReader.prototype.fetchBalance = function (holderUish) {
+    EricaReader.prototype.fetchBalance = function (holderUish) {
         return __awaiter(this, void 0, void 0, function () {
             var holder, holderBignumber, _a, _b, _c;
             return __generator(this, function (_d) {
@@ -140,7 +161,7 @@ var TokenReader = /** @class */ (function (_super) {
             });
         });
     };
-    TokenReader.prototype.fetchAllowance = function (struct) {
+    EricaReader.prototype.fetchAllowance = function (struct) {
         return __awaiter(this, void 0, void 0, function () {
             var holder, spender, allowanceBignumber, _a, _b, _c;
             return __generator(this, function (_d) {
@@ -159,6 +180,12 @@ var TokenReader = /** @class */ (function (_super) {
             });
         });
     };
-    return TokenReader;
+    EricaReader.prototype.fetchIsPaused = function () {
+        return this.ethersContract.isPaused();
+    };
+    EricaReader.prototype.fetchIsMemberAccount = function (address) {
+        return this.ethersContract.isMemberAccount((new pollenium_buttercup_1.Address(address)).uu.toPhex());
+    };
+    return EricaReader;
 }(pollenium_clover_1.ContractReader));
-exports.TokenReader = TokenReader;
+exports.EricaReader = EricaReader;

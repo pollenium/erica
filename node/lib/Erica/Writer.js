@@ -60,15 +60,60 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.EricaWriter = void 0;
 var pollenium_buttercup_1 = require("pollenium-buttercup");
+var pollenium_uvaursi_1 = require("pollenium-uvaursi");
 var pollenium_clover_1 = require("pollenium-clover");
 var __1 = require("../../");
-var TokenWriter = /** @class */ (function (_super) {
-    __extends(TokenWriter, _super);
-    function TokenWriter(struct) {
-        return _super.call(this, __assign(__assign({}, __1.token), struct)) || this;
+var EricaWriter = /** @class */ (function (_super) {
+    __extends(EricaWriter, _super);
+    function EricaWriter(struct) {
+        return _super.call(this, __assign(__assign({}, __1.erica), struct)) || this;
     }
-    TokenWriter.prototype.transfer = function (struct) {
+    EricaWriter.prototype.setOwner = function (address) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.genStateChange(this.ethersContract.transferOwnership(new pollenium_buttercup_1.Address(address).uu.toPhex()))];
+            });
+        });
+    };
+    EricaWriter.prototype.setName = function (name) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.genStateChange(this.ethersContract.setName(pollenium_uvaursi_1.Uu.wrap(name).toUtf8()))];
+            });
+        });
+    };
+    EricaWriter.prototype.setSymbol = function (symbol) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.genStateChange(this.ethersContract.setSymbol(pollenium_uvaursi_1.Uu.wrap(symbol).toUtf8()))];
+            });
+        });
+    };
+    EricaWriter.prototype.mint = function (struct) {
+        return __awaiter(this, void 0, void 0, function () {
+            var to, amount, reason;
+            return __generator(this, function (_a) {
+                to = new pollenium_buttercup_1.Address(struct.to);
+                amount = new pollenium_buttercup_1.Uint256(struct.amount);
+                reason = pollenium_uvaursi_1.Uu.wrap(struct.reason);
+                return [2 /*return*/, this.genStateChange(this.ethersContract.mint(to.uu.toPhex(), amount.uu.toPhex(), reason.toPhex()))];
+            });
+        });
+    };
+    EricaWriter.prototype.burn = function (struct) {
+        return __awaiter(this, void 0, void 0, function () {
+            var from, amount, reason;
+            return __generator(this, function (_a) {
+                from = new pollenium_buttercup_1.Address(struct.from);
+                amount = new pollenium_buttercup_1.Uint256(struct.amount);
+                reason = pollenium_uvaursi_1.Uu.wrap(struct.reason);
+                return [2 /*return*/, this.genStateChange(this.ethersContract.burn(from.uu.toPhex(), amount.uu.toPhex(), reason.toPhex()))];
+            });
+        });
+    };
+    EricaWriter.prototype.transfer = function (struct) {
         return __awaiter(this, void 0, void 0, function () {
             var to, amount;
             return __generator(this, function (_a) {
@@ -78,7 +123,7 @@ var TokenWriter = /** @class */ (function (_super) {
             });
         });
     };
-    TokenWriter.prototype.setAllowance = function (struct) {
+    EricaWriter.prototype.setAllowance = function (struct) {
         return __awaiter(this, void 0, void 0, function () {
             var spender, amount;
             return __generator(this, function (_a) {
@@ -88,6 +133,20 @@ var TokenWriter = /** @class */ (function (_super) {
             });
         });
     };
-    return TokenWriter;
+    EricaWriter.prototype.setIsMemberAccount = function (address, isMemberAccount) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.genStateChange(this.ethersContract.setIsMemberAccount(new pollenium_buttercup_1.Address(address).uu.toPhex(), isMemberAccount))];
+            });
+        });
+    };
+    EricaWriter.prototype.setIsPaused = function (isPaused) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.genStateChange(this.ethersContract.setIsPaused(isPaused))];
+            });
+        });
+    };
+    return EricaWriter;
 }(pollenium_clover_1.ContractWriter));
-exports.TokenWriter = TokenWriter;
+exports.EricaWriter = EricaWriter;

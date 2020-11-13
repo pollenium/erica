@@ -2,23 +2,29 @@ import { ethers } from 'ethers'
 import { Address, Uint256, Uint8 } from 'pollenium-buttercup'
 import { Uu, Uish } from 'pollenium-uvaursi'
 import { ContractReader, ContractReaderChildStruct } from 'pollenium-clover'
-import { token } from '../../'
+import { erica } from '../../'
 
-export class TokenReader extends ContractReader {
+export class EricaReader extends ContractReader {
 
   constructor(struct: ContractReaderChildStruct) {
     super({
-      ...token,
+      ...erica,
       ...struct
     })
   }
 
-  async fetchName(): Promise<string> {
-    return await this.ethersContract.name()
+  async fetchOwner(): Promise<Address> {
+    return new Address(Uu.fromHexish(
+      await this.ethersContract.owner()
+    ))
   }
 
-  async fetchSymbol(): Promise<string> {
-    return await this.ethersContract.symbol()
+  async fetchName(): Promise<Uu> {
+    return Uu.fromUtf8(await this.ethersContract.name())
+  }
+
+  async fetchSymbol(): Promise<Uu> {
+    return Uu.fromUtf8(await this.ethersContract.symbol())
   }
 
   async fetchDecimals(): Promise<Uint8> {
@@ -34,7 +40,6 @@ export class TokenReader extends ContractReader {
       await ethers.utils.hexlify(totalSupplyBignumber)
     ))
   }
-
 
   async fetchBalance(holderUish: Uish): Promise<Uint256> {
     const holder = new Address(holderUish)
@@ -57,6 +62,14 @@ export class TokenReader extends ContractReader {
     return new Uint256(Uu.fromHexish(
       await ethers.utils.hexlify(allowanceBignumber)
     ))
+  }
+
+  fetchIsPaused(): Promise<boolean> {
+    return this.ethersContract.isPaused()
+  }
+
+  fetchIsMemberAccount(address: Uish): Promise<boolean> {
+     return this.ethersContract.isMemberAccount((new Address(address)).uu.toPhex())
   }
 
 }

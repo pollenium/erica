@@ -1,34 +1,48 @@
 {
-  "name": "pollenium-toadflax",
-  "version": "3.0.0",
+  "name": "pollenium-erica",
+  "version": "0.0.0",
   "description": "",
   "main": "node/index.js",
   "scripts": {
     "compile": "succory && tsc",
     "tsc": "tsc",
-    "succory": "succory"
+    "succory": "succory",
+    "test": "jest",
+    "bin:deploy": "ts-node ts/bin/deploy"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/pollenium/toadflax.git"
+    "url": "git+ssh://git@github.com/pollenium/erica.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pollenium/toadflax/issues"
+    "url": "https://github.com/pollenium/erica/issues"
   },
-  "homepage": "https://github.com/pollenium/toadflax#readme",
+  "homepage": "https://github.com/pollenium/erica#readme",
   "dependencies": {
-    "pollenium-buttercup": "^19.6.1",
     "pollenium-clover": "^7.0.0",
-    "pollenium-uvaursi": "^8.11.0"
+    "pollenium-coreopsis": "^5.0.0",
+    "pollenium-forgetmenot": "^5.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
+    "async-q": "^0.3.1",
+    "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
+    "jest": "^26.6.3",
     "openzeppelin-solidity": "^2.4.0",
+    "pollenium-buttercup": "^19.6.1",
+    "pollenium-gaillardia": "^4.3.0",
     "pollenium-succory": "^3.0.0",
+    "pollenium-uvaursi": "^8.11.0",
+    "pollenium-weigela": "^2.0.0",
+    "pollenium-xeranthemum": "^4.0.0",
     "solc": "^0.5.12",
+    "ts-enum-util": "^4.0.2",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.0.0",
     "tsc": "^1.20150623.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.9.7"
   }
 }

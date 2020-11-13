@@ -24,17 +24,14 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-var pollenium_buttercup_1 = require("pollenium-buttercup");
+exports.EricaDeployer = void 0;
 var pollenium_clover_1 = require("pollenium-clover");
 var __1 = require("../../");
-var TokenDeployer = /** @class */ (function (_super) {
-    __extends(TokenDeployer, _super);
-    function TokenDeployer(struct) {
-        return _super.call(this, __assign(__assign(__assign({}, __1.token), struct), { deployTransformer: function (struct) {
-                var totalSupply = new pollenium_buttercup_1.Uint256(struct.totalSupply);
-                return [totalSupply.uu.toPhex()];
-            } })) || this;
+var EricaDeployer = /** @class */ (function (_super) {
+    __extends(EricaDeployer, _super);
+    function EricaDeployer(struct) {
+        return _super.call(this, __assign(__assign({}, __1.erica), struct)) || this;
     }
-    return TokenDeployer;
+    return EricaDeployer;
 }(pollenium_clover_1.ContractDeployer));
-exports.TokenDeployer = TokenDeployer;
+exports.EricaDeployer = EricaDeployer;

@@ -1,4 +1,4 @@
-export { token } from './contractOutputs';
-export { TokenReader } from './classes/Token/Reader';
-export { TokenWriter } from './classes/Token/Writer';
-export { TokenDeployer } from './classes/Token/Deployer';
+export { erica } from './contractOutputs';
+export { EricaReader } from './lib/Erica/Reader';
+export { EricaWriter } from './lib/Erica/Writer';
+export { EricaDeployer } from './lib/Erica/Deployer';

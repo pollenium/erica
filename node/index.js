@@ -1,10 +1,17 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
 exports.__esModule = true;
 var contractOutputs_1 = require("./contractOutputs");
-exports.token = contractOutputs_1.token;
-var Reader_1 = require("./classes/Token/Reader");
-exports.TokenReader = Reader_1.TokenReader;
-var Writer_1 = require("./classes/Token/Writer");
-exports.TokenWriter = Writer_1.TokenWriter;
-var Deployer_1 = require("./classes/Token/Deployer");
-exports.TokenDeployer = Deployer_1.TokenDeployer;
+__createBinding(exports, contractOutputs_1, "erica");
+var Reader_1 = require("./lib/Erica/Reader");
+__createBinding(exports, Reader_1, "EricaReader");
+var Writer_1 = require("./lib/Erica/Writer");
+__createBinding(exports, Writer_1, "EricaWriter");
+var Deployer_1 = require("./lib/Erica/Deployer");
+__createBinding(exports, Deployer_1, "EricaDeployer");

@@ -1,10 +1,11 @@
-import { Uint256, Uint8 } from 'pollenium-buttercup';
-import { Uish } from 'pollenium-uvaursi';
+import { Address, Uint256, Uint8 } from 'pollenium-buttercup';
+import { Uu, Uish } from 'pollenium-uvaursi';
 import { ContractReader, ContractReaderChildStruct } from 'pollenium-clover';
-export declare class TokenReader extends ContractReader {
+export declare class EricaReader extends ContractReader {
     constructor(struct: ContractReaderChildStruct);
-    fetchName(): Promise<string>;
-    fetchSymbol(): Promise<string>;
+    fetchOwner(): Promise<Address>;
+    fetchName(): Promise<Uu>;
+    fetchSymbol(): Promise<Uu>;
     fetchDecimals(): Promise<Uint8>;
     fetchTotalSupply(): Promise<Uint256>;
     fetchBalance(holderUish: Uish): Promise<Uint256>;
@@ -12,4 +13,6 @@ export declare class TokenReader extends ContractReader {
         holder: Uish;
         spender: Uish;
     }): Promise<Uint256>;
+    fetchIsPaused(): Promise<boolean>;
+    fetchIsMemberAccount(address: Uish): Promise<boolean>;
 }
