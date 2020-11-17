@@ -43,6 +43,7 @@ var fixtures_1 = require("./lib/fixtures");
 var __1 = require("../../");
 var getAddress_1 = require("./lib/getAddress");
 var getWallet_1 = require("./lib/getWallet");
+var pollenium_buttercup_1 = require("pollenium-buttercup");
 var gaillardia_1 = require("./lib/gaillardia");
 var pollenium_uvaursi_1 = require("pollenium-uvaursi");
 var async_q_1 = __importDefault(require("async-q"));
@@ -462,7 +463,7 @@ test("attacker should not be able to setIsPaused ", function () { return __await
     var isPaused;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, expect(getWriter('attacker').setIsPaused(true)).rejects.toBeInstanceOf(Error)];
+            case 0: return [4 /*yield*/, expect(getWriter('attacker').setIsPaused(true, pollenium_uvaursi_1.Uu.fromUtf8('attack!'))).rejects.toBeInstanceOf(Error)];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, ericaReader.fetchIsPaused()];
@@ -479,7 +480,7 @@ test("admin should not be able to setIsPaused to true", function () { return __a
         switch (_a.label) {
             case 0:
                 expected.isPaused = true;
-                return [4 /*yield*/, getWriter('admin').setIsPaused(true)];
+                return [4 /*yield*/, getWriter('admin').setIsPaused(true, pollenium_uvaursi_1.Uu.fromUtf8('time to upgrade'))];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, ericaReader.fetchIsPaused()];
@@ -522,7 +523,7 @@ test("admin should not be able to setIsPaused to false", function () { return __
         switch (_a.label) {
             case 0:
                 expected.isPaused = false;
-                return [4 /*yield*/, getWriter('admin').setIsPaused(false)];
+                return [4 /*yield*/, getWriter('admin').setIsPaused(false, pollenium_uvaursi_1.Uu.fromUtf8('upgrade complete'))];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, ericaReader.fetchIsPaused()];
@@ -558,6 +559,104 @@ test("alice can transfer 5 to bob ", function () { return __awaiter(void 0, void
                 expect(totalSupply.toNumber()).toEqual(expected.totalSupply);
                 expect(aliceBalance.toNumber()).toEqual(expected.balances.alice);
                 expect(bobBalance.toNumber()).toEqual(expected.balances.bob);
+                return [2 /*return*/];
+        }
+    });
+}); });
+test('should have correct MintWithReason logs', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var mintWithReasonLogs, valuess;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ericaReader.fetchMintWithReasonLogs({ from: 0, to: 'latest' })];
+            case 1:
+                mintWithReasonLogs = _a.sent();
+                expect(mintWithReasonLogs.length).toEqual(2);
+                valuess = mintWithReasonLogs.map(function (mintWithReasonLog) {
+                    return mintWithReasonLog.values;
+                });
+                //mint 10 to alice
+                expect(valuess[0].to.uu.toHex()).toEqual(alice.uu.toHex());
+                expect(valuess[0].value.toNumber()).toEqual(10);
+                expect(valuess[0].reason.toUtf8()).toEqual('give alice tokens');
+                //mint 10 to bob
+                expect(valuess[1].to.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[1].value.toNumber()).toEqual(20);
+                expect(valuess[1].reason.toUtf8()).toEqual('give bob tokens');
+                return [2 /*return*/];
+        }
+    });
+}); });
+test('should have correct BurnWithReason logs', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var burnWithReasonLogs, valuess;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ericaReader.fetchBurnWithReasonLogs({ from: 0, to: 'latest' })];
+            case 1:
+                burnWithReasonLogs = _a.sent();
+                expect(burnWithReasonLogs.length).toEqual(1);
+                valuess = burnWithReasonLogs.map(function (burnWithReasonLog) {
+                    return burnWithReasonLog.values;
+                });
+                //burn 5 from bob
+                expect(valuess[0].from.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[0].value.toNumber()).toEqual(5);
+                expect(valuess[0].reason.toUtf8()).toEqual('burn bobby burn');
+                return [2 /*return*/];
+        }
+    });
+}); });
+test('should have correct Transfer logs', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var transferLogs, valuess;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ericaReader.fetchTransferLogs({ from: 0, to: 'latest' })];
+            case 1:
+                transferLogs = _a.sent();
+                expect(transferLogs.length).toEqual(5);
+                valuess = transferLogs.map(function (transferLog) {
+                    return transferLog.values;
+                });
+                //mint 10 to alice
+                expect(valuess[0].from.uu.toHex()).toEqual(pollenium_buttercup_1.Address.genNull().uu.toHex());
+                expect(valuess[0].to.uu.toHex()).toEqual(alice.uu.toHex());
+                expect(valuess[0].value.toNumber()).toEqual(10);
+                //mint 20 to bob
+                expect(valuess[1].from.uu.toHex()).toEqual(pollenium_buttercup_1.Address.genNull().uu.toHex());
+                expect(valuess[1].to.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[1].value.toNumber()).toEqual(20);
+                //burn 5 from bob
+                expect(valuess[2].from.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[2].to.uu.toHex()).toEqual(pollenium_buttercup_1.Address.genNull().uu.toHex());
+                expect(valuess[2].value.toNumber()).toEqual(5);
+                //alice transfer 5 to bob
+                expect(valuess[3].from.uu.toHex()).toEqual(alice.uu.toHex());
+                expect(valuess[3].to.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[3].value.toNumber()).toEqual(5);
+                //alice transfer 5 to bob
+                expect(valuess[4].from.uu.toHex()).toEqual(alice.uu.toHex());
+                expect(valuess[4].to.uu.toHex()).toEqual(bob.uu.toHex());
+                expect(valuess[4].value.toNumber()).toEqual(5);
+                return [2 /*return*/];
+        }
+    });
+}); });
+test('should have correct SetIsPausedWithReason logs', function () { return __awaiter(void 0, void 0, void 0, function () {
+    var setIsPausedWithReasonLogs, valuess;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ericaReader.fetchSetIsPausedWithReasonLogs({ from: 0, to: 'latest' })];
+            case 1:
+                setIsPausedWithReasonLogs = _a.sent();
+                expect(setIsPausedWithReasonLogs.length).toEqual(2);
+                valuess = setIsPausedWithReasonLogs.map(function (setIsPausedWithReasonLog) {
+                    return setIsPausedWithReasonLog.values;
+                });
+                // pause: time to upgrade
+                expect(valuess[0].isPaused).toEqual(true);
+                expect(valuess[0].reason.toUtf8()).toEqual('time to upgrade');
+                // pause: upgrade complete
+                expect(valuess[1].isPaused).toEqual(false);
+                expect(valuess[1].reason.toUtf8()).toEqual('upgrade complete');
                 return [2 /*return*/];
         }
     });

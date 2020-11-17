@@ -25,5 +25,5 @@ export declare class EricaWriter extends ContractWriter {
         amount: Uintable;
     }): Promise<StateChange>;
     setIsMemberAccount(address: Uish, isMemberAccount: boolean): Promise<StateChange>;
-    setIsPaused(isPaused: boolean): Promise<StateChange>;
+    setIsPaused(isPaused: boolean, reason: Uish): Promise<StateChange>;
 }

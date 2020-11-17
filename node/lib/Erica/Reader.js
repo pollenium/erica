@@ -186,6 +186,73 @@ var EricaReader = /** @class */ (function (_super) {
     EricaReader.prototype.fetchIsMemberAccount = function (address) {
         return this.ethersContract.isMemberAccount((new pollenium_buttercup_1.Address(address)).uu.toPhex());
     };
+    EricaReader.prototype.fetchMintWithReasonLogs = function (range) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetchLogs({
+                        filter: this.ethersContract.filters.MintWithReason(),
+                        range: range,
+                        transformEthersLogArgsToLogValues: function (args) {
+                            return {
+                                to: new pollenium_buttercup_1.Address(pollenium_uvaursi_1.Uu.fromHexish(args.to)),
+                                value: new pollenium_buttercup_1.Uint256(pollenium_uvaursi_1.Uu.fromHexish(args.value.toHexString())),
+                                reason: pollenium_uvaursi_1.Uu.fromHexish(args.reason)
+                            };
+                        }
+                    })];
+            });
+        });
+    };
+    EricaReader.prototype.fetchBurnWithReasonLogs = function (range) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetchLogs({
+                        filter: this.ethersContract.filters.BurnWithReason(),
+                        range: range,
+                        transformEthersLogArgsToLogValues: function (args) {
+                            return {
+                                from: new pollenium_buttercup_1.Address(pollenium_uvaursi_1.Uu.fromHexish(args.from)),
+                                value: new pollenium_buttercup_1.Uint256(pollenium_uvaursi_1.Uu.fromHexish(args.value.toHexString())),
+                                reason: pollenium_uvaursi_1.Uu.fromHexish(args.reason)
+                            };
+                        }
+                    })];
+            });
+        });
+    };
+    EricaReader.prototype.fetchTransferLogs = function (range) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetchLogs({
+                        filter: this.ethersContract.filters.Transfer(),
+                        range: range,
+                        transformEthersLogArgsToLogValues: function (args) {
+                            return {
+                                to: new pollenium_buttercup_1.Address(pollenium_uvaursi_1.Uu.fromHexish(args.to)),
+                                from: new pollenium_buttercup_1.Address(pollenium_uvaursi_1.Uu.fromHexish(args.from)),
+                                value: new pollenium_buttercup_1.Uint256(pollenium_uvaursi_1.Uu.fromHexish(args.value.toHexString()))
+                            };
+                        }
+                    })];
+            });
+        });
+    };
+    EricaReader.prototype.fetchSetIsPausedWithReasonLogs = function (range) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetchLogs({
+                        filter: this.ethersContract.filters.SetIsPausedWithReason(),
+                        range: range,
+                        transformEthersLogArgsToLogValues: function (args) {
+                            return {
+                                isPaused: args.isPaused,
+                                reason: pollenium_uvaursi_1.Uu.fromHexish(args.reason)
+                            };
+                        }
+                    })];
+            });
+        });
+    };
     return EricaReader;
 }(pollenium_clover_1.ContractReader));
 exports.EricaReader = EricaReader;

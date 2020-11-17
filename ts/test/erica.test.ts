@@ -224,14 +224,14 @@ test(`alice cannot transfer 5 to charlie `, async () => {
 })
 
 test(`attacker should not be able to setIsPaused `, async () => {
-  await expect(getWriter('attacker').setIsPaused(true)).rejects.toBeInstanceOf(Error)
+  await expect(getWriter('attacker').setIsPaused(true, Uu.fromUtf8('attack!'))).rejects.toBeInstanceOf(Error)
   const isPaused = await ericaReader.fetchIsPaused()
   expect(isPaused).toEqual(expected.isPaused)
 })
 
 test(`admin should not be able to setIsPaused to true`, async () => {
   expected.isPaused = true
-  await getWriter('admin').setIsPaused(true)
+  await getWriter('admin').setIsPaused(true, Uu.fromUtf8('time to upgrade'))
   const isPaused = await ericaReader.fetchIsPaused()
   expect(isPaused).toEqual(expected.isPaused)
 })
@@ -251,7 +251,7 @@ test(`alice cannot transfer 5 to bob `, async () => {
 
 test(`admin should not be able to setIsPaused to false`, async () => {
   expected.isPaused = false
-  await getWriter('admin').setIsPaused(false)
+  await getWriter('admin').setIsPaused(false, Uu.fromUtf8('upgrade complete'))
   const isPaused = await ericaReader.fetchIsPaused()
   expect(isPaused).toEqual(expected.isPaused)
 })
@@ -269,4 +269,90 @@ test(`alice can transfer 5 to bob `, async () => {
   expect(totalSupply.toNumber()).toEqual(expected.totalSupply)
   expect(aliceBalance.toNumber()).toEqual(expected.balances.alice)
   expect(bobBalance.toNumber()).toEqual(expected.balances.bob)
+})
+
+test('should have correct MintWithReason logs', async () => {
+  const mintWithReasonLogs = await ericaReader.fetchMintWithReasonLogs({ from: 0, to: 'latest' })
+  expect(mintWithReasonLogs.length).toEqual(2)
+
+  const valuess = mintWithReasonLogs.map((mintWithReasonLog) => {
+    return mintWithReasonLog.values
+  })
+
+  //mint 10 to alice
+  expect(valuess[0].to.uu.toHex()).toEqual(alice.uu.toHex())
+  expect(valuess[0].value.toNumber()).toEqual(10)
+  expect(valuess[0].reason.toUtf8()).toEqual('give alice tokens')
+
+  //mint 10 to bob
+  expect(valuess[1].to.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[1].value.toNumber()).toEqual(20)
+  expect(valuess[1].reason.toUtf8()).toEqual('give bob tokens')
+})
+
+test('should have correct BurnWithReason logs', async () => {
+  const burnWithReasonLogs = await ericaReader.fetchBurnWithReasonLogs({ from: 0, to: 'latest' })
+  expect(burnWithReasonLogs.length).toEqual(1)
+
+  const valuess = burnWithReasonLogs.map((burnWithReasonLog) => {
+    return burnWithReasonLog.values
+  })
+
+  //burn 5 from bob
+  expect(valuess[0].from.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[0].value.toNumber()).toEqual(5)
+  expect(valuess[0].reason.toUtf8()).toEqual('burn bobby burn')
+})
+
+test('should have correct Transfer logs', async () => {
+  const transferLogs = await ericaReader.fetchTransferLogs({ from: 0, to: 'latest' })
+  expect(transferLogs.length).toEqual(5)
+
+  const valuess = transferLogs.map((transferLog) => {
+    return transferLog.values
+  })
+
+  //mint 10 to alice
+  expect(valuess[0].from.uu.toHex()).toEqual(Address.genNull().uu.toHex())
+  expect(valuess[0].to.uu.toHex()).toEqual(alice.uu.toHex())
+  expect(valuess[0].value.toNumber()).toEqual(10)
+
+
+  //mint 20 to bob
+  expect(valuess[1].from.uu.toHex()).toEqual(Address.genNull().uu.toHex())
+  expect(valuess[1].to.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[1].value.toNumber()).toEqual(20)
+
+  //burn 5 from bob
+  expect(valuess[2].from.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[2].to.uu.toHex()).toEqual(Address.genNull().uu.toHex())
+  expect(valuess[2].value.toNumber()).toEqual(5)
+
+  //alice transfer 5 to bob
+  expect(valuess[3].from.uu.toHex()).toEqual(alice.uu.toHex())
+  expect(valuess[3].to.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[3].value.toNumber()).toEqual(5)
+
+  //alice transfer 5 to bob
+  expect(valuess[4].from.uu.toHex()).toEqual(alice.uu.toHex())
+  expect(valuess[4].to.uu.toHex()).toEqual(bob.uu.toHex())
+  expect(valuess[4].value.toNumber()).toEqual(5)
+})
+
+test('should have correct SetIsPausedWithReason logs', async () => {
+  const setIsPausedWithReasonLogs = await ericaReader.fetchSetIsPausedWithReasonLogs({ from: 0, to: 'latest' })
+  expect(setIsPausedWithReasonLogs.length).toEqual(2)
+
+  const valuess = setIsPausedWithReasonLogs.map((setIsPausedWithReasonLog) => {
+    return setIsPausedWithReasonLog.values
+  })
+
+  // pause: time to upgrade
+  expect(valuess[0].isPaused).toEqual(true)
+  expect(valuess[0].reason.toUtf8()).toEqual('time to upgrade')
+
+  // pause: upgrade complete
+  expect(valuess[1].isPaused).toEqual(false)
+  expect(valuess[1].reason.toUtf8()).toEqual('upgrade complete')
+
 })

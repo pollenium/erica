@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/pollenium/erica#readme",
   "dependencies": {
-    "pollenium-clover": "^7.0.0",
+    "pollenium-clover": "^8.1.1",
     "pollenium-coreopsis": "^5.0.0",
     "pollenium-forgetmenot": "^5.0.0"
   },
@@ -33,7 +33,7 @@
     "jest": "^26.6.3",
     "openzeppelin-solidity": "^2.4.0",
     "pollenium-buttercup": "^19.6.1",
-    "pollenium-gaillardia": "^4.3.0",
+    "pollenium-gaillardia": "^6.0.0",
     "pollenium-succory": "^3.0.0",
     "pollenium-uvaursi": "^8.11.0",
     "pollenium-weigela": "^2.0.0",

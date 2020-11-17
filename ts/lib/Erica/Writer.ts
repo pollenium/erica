@@ -96,9 +96,9 @@ export class EricaWriter extends ContractWriter {
     )
   }
 
-  async setIsPaused(isPaused: boolean): Promise<StateChange> {
+  async setIsPaused(isPaused: boolean, reason: Uish): Promise<StateChange> {
     return this.genStateChange(
-       this.ethersContract.setIsPaused(isPaused)
+       this.ethersContract.setIsPaused(isPaused, Uu.wrap(reason).toPhex())
     )
   }
 

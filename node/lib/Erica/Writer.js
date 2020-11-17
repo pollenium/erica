@@ -140,10 +140,10 @@ var EricaWriter = /** @class */ (function (_super) {
             });
         });
     };
-    EricaWriter.prototype.setIsPaused = function (isPaused) {
+    EricaWriter.prototype.setIsPaused = function (isPaused, reason) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.genStateChange(this.ethersContract.setIsPaused(isPaused))];
+                return [2 /*return*/, this.genStateChange(this.ethersContract.setIsPaused(isPaused, pollenium_uvaursi_1.Uu.wrap(reason).toPhex()))];
             });
         });
     };
